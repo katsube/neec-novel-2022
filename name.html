@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>名前入力</title>
+    <style>
+      body{
+        width: 100%;
+        text-align: center;
+
+        background-image: url(image/back/title.jpg);
+        background-size: cover;
+      }
+      #inputname{
+        width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+      }
+      h1{
+        font-size: 16pt;
+      }
+      #text-name{
+        width: 250px;
+        height: 30px;
+      }
+      #btn-enter{
+        width: 100px;
+        height: 35px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="inputname">
+      <h1>主人公の名前を入力してください</h1>
+
+      <form>
+        <input id="text-name" type="text">
+        <button id="btn-enter" type="button">決定</button>
+      </form>
+    </div>
+
+    <script>
+      names = [
+        "Apple", "Banana", "Orange"
+      ];
+
+      i = 1; // 乱数を生成
+      textbox = document.querySelector("#text-name");
+      textbox.value = names[i];
+    </script>
+  </body>
+</html>
