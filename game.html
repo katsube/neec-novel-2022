@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>ゲーム本編</title>
+    <style>
+      #game-window{
+        border: 1px solid red;
+        width: 400px;
+        height: 300px;
+
+        background-image: url(image/back/title.jpg);
+        background-size: cover;
+      }
+      #message{
+        border: 1px solid green;
+        width: 300px;
+        height: 100px;
+        margin-top: 150px;
+        margin-left: 50px;
+
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="game-window">
+      <div id="message">
+        こんにちは！
+      </div>
+    </div>
+
+    <script>
+      scenario = [
+        "あなたの名前はなんですか？",
+        "私はポテト大王です。",
+        "%FOOD%は好きですか？",
+        "今日の天気は%WEATHER%です"
+      ];
+      i = 0;
+
+      username = localStorage.getItem("username");
+
+      message = document.querySelector("#message");
+      message.addEventListener("click", ()=>{
+        message.innerHTML = scenario[i]
+                              .replace("%FOOD%", "バナナ")
+                              .replace("%WEATHER%", "雨");
+        i++;
+      });
+    </script>
+  </body>
+</html>
