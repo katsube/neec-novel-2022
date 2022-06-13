@@ -5,6 +5,7 @@
     <title>ゲーム本編</title>
     <style>
       #game-window{
+        position: absolute;
         border: 1px solid red;
         width: 400px;
         height: 300px;
@@ -13,41 +14,73 @@
         background-size: cover;
       }
       #message{
+        position: absolute;
+        top: 170px;
+        left: 50px;
         border: 1px solid green;
         width: 300px;
         height: 100px;
-        margin-top: 150px;
-        margin-left: 50px;
 
         background-color: rgba(255,255,255,0.8);
         border-radius: 5px;
+      }
+      #chara1{
+        position: absolute;
+        top: 15px;
+        left: 10px;
+        width: 150px;
       }
     </style>
   </head>
   <body>
 
     <div id="game-window">
+      <img src="image/chara/6.png" id="chara1">
       <div id="message">
         こんにちは！
       </div>
     </div>
 
+    <script src="scenario.js"></script>
     <script>
-      scenario = [
-        "あなたの名前はなんですか？",
-        "私はポテト大王です。",
-        "%FOOD%は好きですか？",
-        "今日の天気は%WEATHER%です"
-      ];
       i = 0;
-
+  
       username = localStorage.getItem("username");
+      gameWindow = document.querySelector("#game-window");
+      chara1 = document.querySelector("#chara1");
 
       message = document.querySelector("#message");
       message.addEventListener("click", ()=>{
-        message.innerHTML = scenario[i]
+        command = scenario[i][0];
+        value   = scenario[i][1];
+        
+        switch(command){
+          case "SERIF":
+            message.innerHTML = value
+                              // 【課題】ユーザー名をシナリオに入れる
                               .replace("%FOOD%", "バナナ")
                               .replace("%WEATHER%", "雨");
+            break;
+
+          case "BGIMAGE":
+            gameWindow.style.backgroundImage = value;
+            break;
+          
+          case "SE":
+            se = new Audio(value);
+            se.play();
+            break;
+          
+          case "SE-RAND":
+            n  = Math.floor( Math.random() * 100 ) % value.length;
+            se = new Audio(value[n]);
+            se.play();
+            break;
+          
+          case "CHARA":
+            chara1.setAttribute("src", value);
+            break;
+        }
         i++;
       });
     </script>
