@@ -9,5 +9,6 @@ scenario = [
                 "audio/se/se_enter.mp3",
                 "audio/se/se_turnpage.mp3"
               ]
-  ]
+  ],
+  ["BGIMAGE-RAND", "【課題】"]
 ];

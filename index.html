@@ -21,6 +21,10 @@
   </head>
   <body>
 
+    <form>
+      <button type="button" id="btn-bgm">♪</button>
+    </form>
+  
     <div id="game-title">
       <img src="image/logo.png">
     
@@ -30,10 +34,36 @@
     </div>
 
     <script>
-      btn = document.querySelector("#btn-start");
+      const btn = document.querySelector("#btn-start");
       btn.addEventListener("click", ()=>{
         location.href = "name.html";
       });
+
+      const btnBgm = document.querySelector("#btn-bgm");
+      btnBgm.addEventListener("click", async ()=>{
+        const data = await getJSON('https://api.neecbox.net/now');
+        const time = data['data']['string'];
+        const hour = time
+                        .split(" ")[1]
+                        .split(":")[0];
+        
+        let bgmfile;
+        if( hour <= 12 ){
+          bgmfile = "audio/bgm/bgm_01.mp3"
+        }
+        else{
+          bgmfile = "audio/bgm/bgm_02.mp3"
+        }
+
+        const bgm = new Audio(bgmfile);
+        bgm.play();
+      });
+
+      async function getJSON(url){
+        const res = await fetch(url);
+        const json = await res.json();
+        return(json);
+      }
     </script>
   </body>
 </html>

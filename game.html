@@ -43,46 +43,73 @@
 
     <script src="scenario.js"></script>
     <script>
-      i = 0;
+      let i = 0;
   
-      username = localStorage.getItem("username");
-      gameWindow = document.querySelector("#game-window");
-      chara1 = document.querySelector("#chara1");
+      const username   = localStorage.getItem("username");
+      const gameWindow = document.querySelector("#game-window");
+      const chara1     = document.querySelector("#chara1");
 
-      message = document.querySelector("#message");
+      const body = document.querySelector("body");
+      body.style.backgroundImage = "url(image/back/fantasy_001.jpg)";
+
+
+      const message = document.querySelector("#message");
       message.addEventListener("click", ()=>{
-        command = scenario[i][0];
-        value   = scenario[i][1];
+        const command = scenario[i][0];
+        const value   = scenario[i][1];
         
         switch(command){
           case "SERIF":
-            message.innerHTML = value
-                              // 【課題】ユーザー名をシナリオに入れる
-                              .replace("%FOOD%", "バナナ")
-                              .replace("%WEATHER%", "雨");
+            changeMessage(value);
             break;
 
           case "BGIMAGE":
-            gameWindow.style.backgroundImage = value;
+            changeBackground(value);
             break;
           
           case "SE":
-            se = new Audio(value);
-            se.play();
+            playSE(value);
             break;
           
           case "SE-RAND":
-            n  = Math.floor( Math.random() * 100 ) % value.length;
-            se = new Audio(value[n]);
-            se.play();
+            playSeRand(value);
+            break;
+          
+          case "BGIMAGE-RAND":
+            // 【課題】ランダムに背景を変更
             break;
           
           case "CHARA":
-            chara1.setAttribute("src", value);
+            changeChara(value);
             break;
         }
         i++;
       });
+    
+      function changeMessage(text){
+        message.innerHTML = text
+                              // 【課題】ユーザー名をシナリオに入れる
+                              .replace("%FOOD%", "バナナ")
+                              .replace("%WEATHER%", "雨");
+      }
+    
+      function changeBackground(url){
+        gameWindow.style.backgroundImage = url;
+      }
+
+      function playSE(url){
+        const se = new Audio(url);
+        se.play();
+      }
+
+      function playSeRand(urls){
+        const n = Math.floor( Math.random() * 100 ) % urls.length;
+        playSE(urls[n]);
+      }
+
+      function changeChara(url){
+        chara1.setAttribute("src", url);
+      }
     </script>
   </body>
 </html>
