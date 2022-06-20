@@ -49,9 +49,8 @@
       const gameWindow = document.querySelector("#game-window");
       const chara1     = document.querySelector("#chara1");
 
-      const body = document.querySelector("body");
-      body.style.backgroundImage = "url(image/back/fantasy_001.jpg)";
-
+      // サーバの時間に合わせて背景画像をセットする
+      changeBodyBGImageOnServertime();
 
       const message = document.querySelector("#message");
       message.addEventListener("click", ()=>{
@@ -85,7 +84,22 @@
         }
         i++;
       });
-    
+
+      function changeBodyBGImageOnServertime(){
+        const body = document.querySelector("body");
+        const data = getJSON('https://api.neecbox.net/now');
+
+        // このあたりに時間に合わせて背景を変更する処理を書く
+        let imagefile;
+        body.style.backgroundImage = imagefile;
+      }
+
+      async function getJSON(url){
+        const res = await fetch(url);
+        const json = await res.json();
+        return(json);
+      }
+
       function changeMessage(text){
         message.innerHTML = text
                               // 【課題】ユーザー名をシナリオに入れる
