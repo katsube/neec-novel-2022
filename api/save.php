@@ -6,7 +6,7 @@
  *     POST /api/save.php
  *     id=G999A9999&value=xxxxxxxxxxx
  * レスポンス
- *     {status: true}
+ *     {"status": true}
  */
 
 //-----------------------------------------------------

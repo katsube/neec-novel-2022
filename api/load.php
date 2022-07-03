@@ -3,13 +3,14 @@
  * ロードする
  *
  * リクエスト
- *     GET /api/get.phpid=G999A9999
+ *     GET /api/get.php?id=G999A9999
  * レスポンス
  *     {
- *       status: true,
- *       data:
- *          id: "G999A9999"
- *          value: "xxxxxxxxxxxx"
+ *       "status": true,
+ *       "data":{
+ *          "id": "G999A9999",
+ *          "value": "xxxxxxxxxxxx"
+ *       }
  *     }
  */
 
