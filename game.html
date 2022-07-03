@@ -4,18 +4,31 @@
     <meta charset="utf8">
     <title>ゲーム本編</title>
     <style>
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: 600px;
+        margin: 0px;
+        padding: 0px;
+
+        background-color: rgba(255,255,255,0.5);
+        background-size: cover;
+        background-blend-mode: lighten;
+        background-repeat: no-repeat;
+      }
       #game-window{
-        position: absolute;
         border: 1px solid red;
         width: 400px;
         height: 300px;
-
         background-image: url(image/back/title.jpg);
         background-size: cover;
       }
       #message{
-        position: absolute;
-        top: 170px;
+        position: relative;
+        top: -60px;
         left: 50px;
         border: 1px solid green;
         width: 300px;
@@ -25,14 +38,14 @@
         border-radius: 5px;
       }
       #chara1{
-        position: absolute;
+        position: relative;
         top: 15px;
         left: 10px;
         width: 150px;
       }
       #ctrl{
-        position: absolute;
-        top: 270px;
+        position: relative;
+        top: -60px;
         left: 50px;
         width: 300px;
         height: 25px;
@@ -58,7 +71,7 @@
     <script src="scenario.js"></script>
     <script>
       let i = 0;
-  
+
       const username   = localStorage.getItem("username");
       const gameWindow = document.querySelector("#game-window");
       const chara1     = document.querySelector("#chara1");
@@ -70,7 +83,7 @@
       message.addEventListener("click", ()=>{
         const command = scenario[i][0];
         const value   = scenario[i][1];
-        
+
         switch(command){
           case "SERIF":
             changeMessage(value);
@@ -79,19 +92,19 @@
           case "BGIMAGE":
             changeBackground(value);
             break;
-          
+
           case "SE":
             playSE(value);
             break;
-          
+
           case "SE-RAND":
             playSeRand(value);
             break;
-          
+
           case "BGIMAGE-RAND":
             // 【課題】ランダムに背景を変更
             break;
-          
+
           case "CHARA":
             changeChara(value);
             break;
@@ -101,9 +114,10 @@
 
       async function changeBodyBGImageOnServertime(){
         const body = document.querySelector("body");
-        const data = await getJSON('https://api.neecbox.net/now');
+        body.style.backgroundImage = "url(image/back/fantasy_001.jpg)";
 
         // 【課題】時間によって背景を変える
+        // const data = await getJSON('https://api.neecbox.net/now');
         // let imagefile;
         // body.style.backgroundImage = imagefile;
       }
@@ -120,7 +134,7 @@
                               .replace("%FOOD%", "バナナ")
                               .replace("%WEATHER%", "雨");
       }
-    
+
       function changeBackground(url){
         gameWindow.style.backgroundImage = url;
       }
