@@ -115,6 +115,33 @@
         i++;
       });
 
+      const btnSave = document.querySelector("#btn-save");
+      btnSave.addEventListener("click", async ()=>{
+        const id = "G999A9999";
+        const result = await getJSONPost('https://api.neecbox.net/novel/set', id, i);
+        if( result['status'] ){
+          alert('保存されました');
+        }
+        else{
+          alert('保存に失敗しました');
+        }
+      });
+
+      const btnLoad = document.querySelector("#btn-load");
+      btnLoad.addEventListener("click", async ()=>{
+        const id = "G999A9999";
+
+        const result = await getJSON("https://api.neecbox.net/novel/get?id="+id);
+        if( result["status"] ){
+          const data = result["data"]["value"];
+          alert(data);
+        }
+        else{
+          alert('ロードに失敗しました');
+        }
+      });
+
+
       async function changeBodyBGImageOnServertime(){
         const body = document.querySelector("body");
         body.style.backgroundImage = "url(image/back/fantasy_001.jpg)";
@@ -127,6 +154,18 @@
 
       async function getJSON(url){
         const res = await fetch(url);
+        const json = await res.json();
+        return(json);
+      }
+
+      async function getJSONPost(url, id, value){
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({id, value})
+        });
         const json = await res.json();
         return(json);
       }
