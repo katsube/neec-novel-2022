@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <title>デバッグツール</title>
+</head>
+<body>
+<h1>デバッグツール</h1>
+
+<h2>セーブ</h2>
+<form>
+  <input type="text" id="text-id1" placeholder="G999A9999">
+  <input type="text" id="text-data" placeholder="123">
+  <button type="button" id="btn-save">保存</button>
+</form>
+
+<h2>ロード</h2>
+<form>
+  <input type="text" id="text-id2" placeholder="G999A9999">
+  <button type="button" id="btn-load">取り出し</button>
+</form>
+
+
+
+<script>
+const btnLoad = document.querySelector("#btn-load");
+btnLoad.addEventListener("click", async ()=>{
+  const id = document.querySelector("#text-id2").value;
+
+  const data = await getJSON('https://api.neecbox.net/novel/get?id='+id);
+  const value = data["data"]["value"];
+  console.log(value);
+  alert(value);
+});
+
+const btnSave = document.querySelector("#btn-save");
+btnSave.addEventListener("click", async ()=>{
+  const id   = document.querySelector("#text-id1").value;
+  const data = document.querySelector("#text-data").value;
+
+  await getJSONPost('https://api.neecbox.net/novel/set', id, data);
+  alert('保存されました');
+});
+
+
+async function getJSON(url){
+  const res = await fetch(url);
+  const json = await res.json();
+  return(json);
+}
+
+async function getJSONPost(url, id, value){
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({id, value})
+  });
+  const json = await res.json();
+  return(json);
+}
+</script>
+</body>
+</html>
