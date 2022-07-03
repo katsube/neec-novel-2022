@@ -75,6 +75,19 @@
     <script>
       let i = 0;
 
+      // 学籍番号
+      const STUDENT_ID = "G999A9999";
+
+      // ゲーム内の現在の状態を保存
+      const STATUS = [
+        0,      // 0: シナリオ位置
+        null,   // 1: 背景画像（未指定の場合はnull）
+        null    // 2: キャラクター（未指定の場合はnull）
+      ];
+      const STATUS_POS   = 0;
+      const STATUS_BG    = 1;
+      const STATUS_CHARA = 2;
+
       const username   = localStorage.getItem("username");
       const gameWindow = document.querySelector("#game-window");
       const chara1     = document.querySelector("#chara1");
@@ -112,13 +125,14 @@
             changeChara(value);
             break;
         }
+        STATUS[STATUS_POS] = i;
         i++;
       });
 
       const btnSave = document.querySelector("#btn-save");
       btnSave.addEventListener("click", async ()=>{
-        const id = "G999A9999";
-        const result = await getJSONPost('https://api.neecbox.net/novel/set', id, i);
+        const value = JSON.stringify(STATUS);
+        const result = await getJSONPost('https://api.neecbox.net/novel/set', STUDENT_ID, value);
         if( result['status'] ){
           alert('保存されました');
         }
@@ -129,12 +143,12 @@
 
       const btnLoad = document.querySelector("#btn-load");
       btnLoad.addEventListener("click", async ()=>{
-        const id = "G999A9999";
-
-        const result = await getJSON("https://api.neecbox.net/novel/get?id="+id);
+        const result = await getJSON("https://api.neecbox.net/novel/get?id=" + STUDENT_ID);
         if( result["status"] ){
-          const data = result["data"]["value"];
-          alert(data);
+          const data = JSON.parse(result["data"]["value"]);
+          i = data[STATUS_POS];
+          changeBackground(data[STATUS_BG]);
+          changeChara(data[STATUS_CHARA]);
         }
         else{
           alert('ロードに失敗しました');
@@ -178,7 +192,10 @@
       }
 
       function changeBackground(url){
-        gameWindow.style.backgroundImage = url;
+        if(url !== null){
+          gameWindow.style.backgroundImage = url;
+          STATUS[STATUS_BG] = url;
+        }
       }
 
       function playSE(url){
@@ -192,7 +209,10 @@
       }
 
       function changeChara(url){
-        chara1.setAttribute("src", url);
+        if(url !== null){
+          chara1.setAttribute("src", url);
+          STATUS[STATUS_CHARA] = url;
+        }
       }
     </script>
   </body>
