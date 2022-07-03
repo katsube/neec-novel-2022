@@ -132,7 +132,7 @@
       const btnSave = document.querySelector("#btn-save");
       btnSave.addEventListener("click", async ()=>{
         const value = JSON.stringify(STATUS);
-        const result = await getJSONPost('https://api.neecbox.net/novel/set', STUDENT_ID, value);
+        const result = await getJSONPost('api/save.php', STUDENT_ID, value);
         if( result['status'] ){
           alert('保存されました');
         }
@@ -143,7 +143,7 @@
 
       const btnLoad = document.querySelector("#btn-load");
       btnLoad.addEventListener("click", async ()=>{
-        const result = await getJSON("https://api.neecbox.net/novel/get?id=" + STUDENT_ID);
+        const result = await getJSON("api/load.php?id=" + STUDENT_ID);
         if( result["status"] ){
           const data = JSON.parse(result["data"]["value"]);
           i = data[STATUS_POS];
