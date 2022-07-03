@@ -30,6 +30,16 @@
         left: 10px;
         width: 150px;
       }
+      #ctrl{
+        position: absolute;
+        top: 270px;
+        left: 50px;
+        width: 300px;
+        height: 25px;
+      }
+      #btn-save, #btn-load{
+        font-size: 6pt;
+      }
     </style>
   </head>
   <body>
@@ -38,6 +48,10 @@
       <img src="image/chara/6.png" id="chara1">
       <div id="message">
         こんにちは！
+      </div>
+      <div id="ctrl">
+        <button type="button" id="btn-save">セーブ</button>
+        <button type="button" id="btn-load">ロード</button>
       </div>
     </div>
 
@@ -49,9 +63,8 @@
       const gameWindow = document.querySelector("#game-window");
       const chara1     = document.querySelector("#chara1");
 
-      const body = document.querySelector("body");
-      body.style.backgroundImage = "url(image/back/fantasy_001.jpg)";
-
+      // サーバの時間に合わせて背景画像をセットする
+      changeBodyBGImageOnServertime();
 
       const message = document.querySelector("#message");
       message.addEventListener("click", ()=>{
@@ -85,7 +98,22 @@
         }
         i++;
       });
-    
+
+      async function changeBodyBGImageOnServertime(){
+        const body = document.querySelector("body");
+        const data = await getJSON('https://api.neecbox.net/now');
+
+        // 【課題】時間によって背景を変える
+        // let imagefile;
+        // body.style.backgroundImage = imagefile;
+      }
+
+      async function getJSON(url){
+        const res = await fetch(url);
+        const json = await res.json();
+        return(json);
+      }
+
       function changeMessage(text){
         message.innerHTML = text
                               // 【課題】ユーザー名をシナリオに入れる
