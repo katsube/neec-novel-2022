@@ -3,7 +3,7 @@
  * ロードする
  *
  * リクエスト
- *     GET /api/get.php?id=G999A9999
+ *     GET /api/load.php?id=G999A9999
  * レスポンス
  *     {
  *       "status": true,
